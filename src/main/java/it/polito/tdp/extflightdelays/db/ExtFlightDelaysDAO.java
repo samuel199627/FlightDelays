@@ -39,6 +39,8 @@ public class ExtFlightDelaysDAO {
 		}
 	}
 
+	//invece di farci ritornare la lista di aereoporti, andiamo a manipolare la nostra mappa
+	//di aereoporti, in base a quello che trovo e aggiungendo quelli con id che non c'era ancora
 	public void loadAllAirports(Map<Integer, Airport> idMap) {
 		String sql = "SELECT * FROM airports";
 
@@ -95,6 +97,7 @@ public class ExtFlightDelaysDAO {
 		}
 	}
 
+	//contiamo il numero effettivo distinto di compagnie che operano su un certo aereoporto che passiamo come parametro
 	public int getAirlinesNumber(Airport a) {
 		String sql = "SELECT COUNT(DISTINCT(AIRLINE_ID)) AS tot " + 
 				"FROM flights " + 
@@ -122,6 +125,15 @@ public class ExtFlightDelaysDAO {
 		return res;
 	}
 
+	/*
+	 	Si fa dare tutte le rotte in cui ho le rotte nelle singole direzioni (che poi dovremo gestire
+	 	in quanto non vorremo poi avere le direzioni, ma gli archi sono non orientati) in cui raggruppo
+	 	dai voli, per aereoporto di partenza e arrivo e conto quante righe ci sono in questa direzione
+	 	specifica perche' il peso degli archi in questo esercizio non e' piu' la distanza media, ma solo
+	 	il numero di connessioni che ci sono.
+	 	
+	 	Dal risultato della query si fa ridare tutte le rotte usando la identity map degli aereoporti
+	 */
 	public List<Rotta> getRotte(Map<Integer, Airport> idMap) {
 		String sql = "SELECT ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID, COUNT(*) as tot " +
 					"FROM flights " +

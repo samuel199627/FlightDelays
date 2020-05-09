@@ -1,5 +1,10 @@
 package it.polito.tdp.extflightdelays.model;
 
+//classe che modella le connessioni tra due aereoporti con un certo peso in base al numero di voli
+//che le connettono con le relative distanze: il peso e' la media di distanza tra tutti i voli tra i due.
+
+//una rotta e' uguale all'altra se i due aereoporti sono uguali, si esclude il peso.
+
 public class Rotta {
 	
 	Airport a1;
